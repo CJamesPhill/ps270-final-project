@@ -6,9 +6,22 @@ output:
   distill::distill_article:
     self_contained: false
 ---
+```{r}
+library(tidyverse)
+inflation <- read_csv("data/inflation.csv", show_col_types = FALSE)
+presapp <- read_csv("data/presapp.csv", show_col_types = FALSE)
+
+head(inflation)
+head(presapp)
+```
 
 
 
 ## Project thoughts
 
 I am interested in exploring data related to economics and political science. For example, I would be curious to research whether higher inflation is correlated with lower presidential approval ratings.
+
+## Research Hypothesis
+
+My research question is as follows: does higher inflation have an impact on presidential approval ratings? 
+My hypothesis that higher inflation is associated with lower presidential approval ratings. I believe that this is the case because the public generally pays attention to inflation as a general indicator of economic health, and also attributes economic outcomes to the sitting president. By extension, they should disapprove more of a president who is in office while inflation is higher. My explanatory variable of interest is yearly inflation from 1960 - 2024, sourced from the Federal Reserve Bank of St. Louis "Inflation, consumer prices for the United States" indicator. This variable is measured annually and expressed as a percentage. My outcome variable of interest is average presidential approval rating from time in office from Gallup, ranging from Harry Truman to Joe Biden and also expressed as a percentage. If a given increase in inflation corresponds to a lower presidential approval rating, this would provide support for my hypothesis. A given increase in inflation has no positive or negative correlation on presidential approval ratings, or a given increase in inflation is associated with higher presidential ratings, would disprove my hypothesis.
