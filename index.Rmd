@@ -75,7 +75,7 @@ visual <- ggplot(data = visual_data, mapping = aes(x = avg_inflation, y = approv
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, color = "indianred1") +
   geom_text(aes(label = president), size = 2, vjust = -0.5) +
-  labs(x = "Average Inflation During Term",
+  labs(x = "Average Inflation During Term (%)",
        y = "Average Presidential Approval Rating (%)",
        title = "Relationship Between Inflation and Presidential Approval")
 
