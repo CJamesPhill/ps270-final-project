@@ -25,3 +25,60 @@ I am interested in exploring data related to economics and political science. Fo
 
 My research question is as follows: does higher inflation have an impact on presidential approval ratings? 
 My hypothesis that higher inflation is associated with lower presidential approval ratings. I believe that this is the case because the public generally pays attention to inflation as a general indicator of economic health, and also attributes economic outcomes to the sitting president. By extension, they should disapprove more of a president who is in office while inflation is higher. My explanatory variable of interest is yearly inflation from 1960 - 2024, sourced from the Federal Reserve Bank of St. Louis "Inflation, consumer prices for the United States" indicator. This variable is measured annually and expressed as a percentage. My outcome variable of interest is average presidential approval rating from time in office from Gallup, ranging from Harry Truman to Joe Biden and also expressed as a percentage. If a given increase in inflation corresponds to a lower presidential approval rating, this would provide support for my hypothesis. A given increase in inflation has no positive or negative correlation on presidential approval ratings, or a given increase in inflation is associated with higher presidential ratings, would disprove my hypothesis.
+
+## Data cleaning and visualization
+
+```{r}
+presapp <- presapp |>
+  slice(-1) |>
+  rename(president = X.1, 
+         approval = `Average approval rating`) |>
+  mutate(approval = as.numeric(approval))
+
+inflation <- inflation |>
+  rename(inflation = FPCPITOTLZGUSA) |>
+  mutate(year = as.integer(format(observation_date, "%Y")))
+```
+
+```{r}
+presapp
+```
+
+
+```{r}
+inflation_by_pres <- inflation |>
+  mutate(president = case_when(
+    year >= 1945 & year <= 1952 ~ "Harry Truman",
+    year >= 1953 & year <= 1960 ~ "Dwight Eisenhower",
+    year >= 1961 & year <= 1963 ~ "John Kennedy",
+    year >= 1964 & year <= 1968 ~ "Lyndon Johnson",
+    year >= 1969 & year <= 1973 ~ "Richard Nixon",
+    year >= 1974 & year <= 1976 ~ "Gerald Ford",
+    year >= 1977 & year <= 1980 ~ "Jimmy Carter",
+    year >= 1981 & year <= 1988 ~ "Ronald Raegan",
+    year >= 1989 & year <= 1992 ~ "George H.W. Bush",
+    year >= 1993 & year <= 2000 ~ "Bill Clinton",
+    year >= 2001 & year <= 2008 ~ "George W. Bush",
+    year >= 2009 & year <= 2016 ~ "Barack Obama",
+    year >= 2017 & year <= 2021 ~ "Donald Trump",
+    year >= 2022 & year <= 2025 ~ "Joe Biden" 
+    )) |>
+  group_by(president) |>
+  summarize(avg_inflation = mean(inflation, na.rm = TRUE))
+
+visual_data <- presapp |>
+  inner_join(inflation_by_pres, by = "president")
+```
+
+```{r}
+visual <- ggplot(data = visual_data, mapping = aes(x = avg_inflation, y = approval)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "indianred1") +
+  geom_text(aes(label = president), size = 2, vjust = -0.5) +
+  labs(x = "Average Inflation During Term",
+       y = "Average Presidential Approval Rating (%)",
+       title = "Relationship Between Inflation and Presidential Approval")
+
+visual
+```
+
