@@ -55,13 +55,13 @@ joined
 ```
 
 ```{r}
-visual <- ggplot(data = joined, mapping = aes(x = inflation, y = approval)) +
+visual <- ggplot(data = joined, mapping = aes(x = inflation, y = approval, color = President)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, color = "indianred1") +
-  geom_text(aes(label = President), size = 2, vjust = -0.5) +
   labs(x = "Yearly Inflation (%)",
        y = "Yearly Presidential Approval Rating (%)",
-       title = "Relationship Between Inflation and Presidential Approval")
+       title = "Relationship Between Inflation and Presidential Approval") +
+  theme_minimal()
 
 visual
 ```
