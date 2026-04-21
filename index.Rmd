@@ -9,7 +9,7 @@ output:
 ```{r}
 library(tidyverse)
 inflation <- read_csv("data/inflation.csv", show_col_types = FALSE)
-presapp <- read_csv("data/presapp.csv", show_col_types = FALSE)
+presapp <- read_csv("data/presapp270.csv", show_col_types = FALSE)
 
 head(inflation)
 head(presapp)
@@ -24,61 +24,43 @@ I am interested in exploring data related to economics and political science. Fo
 ## Research Hypothesis
 
 My research question is as follows: does higher inflation have an impact on presidential approval ratings? 
-My hypothesis that higher inflation is associated with lower presidential approval ratings. I believe that this is the case because the public generally pays attention to inflation as a general indicator of economic health, and also attributes economic outcomes to the sitting president. By extension, they should disapprove more of a president who is in office while inflation is higher. My explanatory variable of interest is yearly inflation from 1960 - 2024, sourced from the Federal Reserve Bank of St. Louis "Inflation, consumer prices for the United States" indicator. This variable is measured annually and expressed as a percentage. My outcome variable of interest is average presidential approval rating from time in office from Gallup, ranging from Harry Truman to Joe Biden and also expressed as a percentage. If a given increase in inflation corresponds to a lower presidential approval rating, this would provide support for my hypothesis. A given increase in inflation has no positive or negative correlation on presidential approval ratings, or a given increase in inflation is associated with higher presidential ratings, would disprove my hypothesis.
+My hypothesis that higher inflation is associated with lower presidential approval ratings. I believe that this is the case because the public generally pays attention to inflation as a general indicator of economic health, and also attributes economic outcomes to the sitting president. By extension, they should disapprove more of a president who is in office while inflation is higher. My explanatory variable of interest is yearly inflation from 1960 - 2024, sourced from the Federal Reserve Bank of St. Louis "Inflation, consumer prices for the United States" indicator. This variable is measured annually and expressed as a percentage. My outcome variable of interest is yearly presidential approval ratings from time in office from Gallup, ranging from Harry Truman to Joe Biden and also expressed as a percentage. I recorded yearly presidential approval ratings from Gallup's "Presidential Job Approval Center" into an Excel document. If a given increase in inflation corresponds to a lower presidential approval rating, this would provide support for my hypothesis. A given increase in inflation has no positive or negative correlation on presidential approval ratings, or a given increase in inflation is associated with higher presidential ratings, would disprove my hypothesis.
 
 ## Data cleaning and visualization
 
 ```{r}
 presapp <- presapp |>
-  slice(-1) |>
-  rename(president = X.1, 
-         approval = `Average approval rating`) |>
-  mutate(approval = as.numeric(approval))
+  rename(year = Date) |>
+  mutate(
+    approval = parse_number(`Approval Rating`))
+
+presapp
 
 inflation <- inflation |>
   rename(inflation = FPCPITOTLZGUSA) |>
   mutate(year = as.integer(format(observation_date, "%Y")))
+
+inflation
 ```
 
-```{r}
-presapp
-```
 
 
 ```{r}
 library(tidyverse)
 
-inflation_by_pres <- inflation |>
-  mutate(president = case_when(
-    year >= 1945 & year <= 1952 ~ "Harry Truman",
-    year >= 1953 & year <= 1960 ~ "Dwight Eisenhower",
-    year >= 1961 & year <= 1963 ~ "John Kennedy",
-    year >= 1964 & year <= 1968 ~ "Lyndon Johnson",
-    year >= 1969 & year <= 1973 ~ "Richard Nixon",
-    year >= 1974 & year <= 1976 ~ "Gerald Ford",
-    year >= 1977 & year <= 1980 ~ "Jimmy Carter",
-    year >= 1981 & year <= 1988 ~ "Ronald Reagan",
-    year >= 1989 & year <= 1992 ~ "George H.W. Bush",
-    year >= 1993 & year <= 2000 ~ "Bill Clinton",
-    year >= 2001 & year <= 2008 ~ "George W. Bush",
-    year >= 2009 & year <= 2016 ~ "Barack Obama",
-    year >= 2017 & year <= 2021 ~ "Donald Trump",
-    year >= 2022 & year <= 2025 ~ "Joe Biden" 
-    )) |>
-  group_by(president) |>
-  summarize(avg_inflation = mean(inflation, na.rm = TRUE))
+joined <- presapp |>
+  inner_join(inflation, by = "year")
 
-visual_data <- presapp |>
-  inner_join(inflation_by_pres, by = "president")
+joined
 ```
 
 ```{r}
-visual <- ggplot(data = visual_data, mapping = aes(x = avg_inflation, y = approval)) +
+visual <- ggplot(data = joined, mapping = aes(x = inflation, y = approval)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, color = "indianred1") +
-  geom_text(aes(label = president), size = 2, vjust = -0.5) +
-  labs(x = "Average Inflation During Term (%)",
-       y = "Average Presidential Approval Rating (%)",
+  geom_text(aes(label = President), size = 2, vjust = -0.5) +
+  labs(x = "Yearly Inflation (%)",
+       y = "Yearly Presidential Approval Rating (%)",
        title = "Relationship Between Inflation and Presidential Approval")
 
 visual
@@ -87,7 +69,7 @@ visual
 ## Regression
 ```{r}
 library(broom)
-approval_fit <- lm(approval ~ avg_inflation, data = visual_data)
+approval_fit <- lm(approval ~ inflation, data = joined)
 
 regression_table <- tidy(approval_fit)
 
@@ -98,4 +80,4 @@ regression_table |>
     caption = "Table 1: Linear Regression of Presidential Approval on Inflation"
   )
 ```
-According to my regression analysis, the predicted presidential approval rating when average inflation is 0% is 58.49%. The slope is -1.52, meaning that every 1% increase in average inflation corresponds to a drop in presidential approval ratings of 1.52%. These findings support my hypothesis that higher average inflation is associated with lower presidential approval ratings. One thing to note is the p-value of 11%, which informs us that there is an 11% chance these findings would be visible even if inflation had no effect on presidential approval ratings. 
+According to my regression analysis, the predicted presidential approval rating when yearly inflation is 0% is 57.43%. The slope is -1.27, meaning that every 1% increase in yearly inflation corresponds to a drop in presidential approval ratings of 1.27%. These findings support my hypothesis that higher inflation is associated with lower presidential approval ratings. One thing to note is the p-value of 3%, which informs us that there is an 3% chance these findings would be visible even if inflation had no effect on presidential approval ratings. 
