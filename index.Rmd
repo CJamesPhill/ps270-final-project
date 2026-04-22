@@ -19,12 +19,17 @@ head(presapp)
 
 ## Introduction
 
-**My research question is as follows**: does higher inflation have an impact on presidential approval ratings? **I hypothesize that higher inflation is associated with lower presidential approval ratings.** I believe this relationship will be evident, because the public generally pays attention to inflation as a general indicator of economic health, and also attributes economic outcomes to the sitting president. By extension, they should disapprove more of a president who is in office while inflation is higher. My explanatory variable of interest is yearly inflation from 1960 - 2024, sourced from the Federal Reserve Bank of St. Louis "Inflation, consumer prices for the United States" indicator. This variable is measured annually and expressed as a percentage. My outcome variable of interest is yearly presidential approval ratings from time in office from Gallup, ranging from Harry Truman to Joe Biden, and also expressed as a percentage. I recorded yearly presidential approval ratings from Gallup's "Presidential Job Approval Center" into an Excel document. If a given increase in inflation corresponds to a lower presidential approval rating, this would provide support for my hypothesis. A given increase in inflation has no positive or negative correlation on presidential approval ratings, or a given increase in inflation is associated with higher presidential ratings, would disprove my hypothesis.
+**My research question is as follows**: does higher inflation have an impact on presidential approval ratings? **I hypothesize that higher inflation is associated with lower presidential approval ratings.** I believe this relationship will be evident, because the public generally pays attention to inflation as a general indicator of economic health, and also attributes economic outcomes to the sitting president. By extension, they should disapprove more of a president who is in office while inflation is higher. 
 
-**This research question is important**, because it seeks to provide explanation for public presidential approval ratings. Presidential approval ratings have a large impact on
+**This research question is important**, because it seeks to provide explanation for presidential approval ratings, the primary indicator used to define the public's assessment of the president. Presidential approval ratings have a wide berth of consequences. They indicate the president's likelihood of reelection, the likelihood that president's party will find success at midterm elections, the level of difficulty the president will incur in trying to pass legislation, and other considerations. As a result, it's important to understand what variables impact presidential approval ratings. The rate of inflation is one of the most visible aspects of the economy in the public's eyes, and the public also looks to the president to generate economic success. Thus, it is logical to research whether the rate of inflation informs the public's opinion of the president. 
 
+## Data
 
-## Data cleaning and visualization
+My explanatory variable of interest, or **predictor variable, is** yearly inflation from 1960 - 2024, sourced from the Federal Reserve Bank of St. Louis's "Inflation, consumer prices for the United States" indicator. This variable is measured annually and expressed as a percentage. **My outcome variable of interest is** Gallup's yearly presidential approval ratings from time in office, ranging from Harry Truman to Joe Biden, and also expressed as a percentage. I specifically recorded yearly presidential approval ratings from Gallup's "Presidential Job Approval Center" into an Excel document. If a given increase in inflation corresponds to a lower presidential approval rating, **this would provide support for my hypothesis.** If a given increase in inflation has no correlation with presidential approval ratings, or if a given increase in inflation is associated with higher presidential ratings, **this would mean that I reject my hypothesis.**
+
+## Data Cleaning
+
+### Preview of Inflation and Presidential Approval Ratings Datasets
 
 ```{r}
 presapp <- presapp |>
@@ -41,16 +46,32 @@ inflation <- inflation |>
 inflation
 ```
 
+### **Plot Visualizing Presidential Voting Records**
 
+```{r}
+presappplot <- ggplot(data = presapp, mapping = aes(x = approval, y = year)) +
+  geom_point() +
+  labs(x = "Presidential Approval Rating (%)",
+       y = "Year",
+       title = "Presidential Approval Ratings by Year")
+
+presappplot
+```
+
+### Joining Datasets
 
 ```{r}
 library(tidyverse)
 
 joined <- presapp |>
-  inner_join(inflation, by = "year")
+  inner_join(inflation, by = "year") 
 
 joined
 ```
+
+## Results
+
+### **Plot Visualizing Presidential Approval Ratings with Relation to Changes in Inflation**
 
 ```{r}
 visual <- ggplot(data = joined, mapping = aes(x = inflation, y = approval, color = President)) +
@@ -58,7 +79,7 @@ visual <- ggplot(data = joined, mapping = aes(x = inflation, y = approval, color
   geom_smooth(method = "lm", se = FALSE, color = "indianred1") +
   labs(x = "Yearly Inflation (%)",
        y = "Yearly Presidential Approval Rating (%)",
-       title = "Relationship Between Inflation and Presidential Approval") +
+       title = "Relationship Between Inflation and Presidential Approval Ratings") +
   theme_minimal()
 
 visual
