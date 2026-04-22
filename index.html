@@ -116,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["data/inflation.csv","data/presapp.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["data/inflation.csv","data/presapp.csv","data/presapp270.csv","data/presapp270.xlsx","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/presapp270.xlsx","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1548,7 +1548,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
 <span><span class='va'>inflation</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"data/inflation.csv"</span>, show_col_types <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
-<span><span class='va'>presapp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"data/presapp.csv"</span>, show_col_types <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span><span class='va'>presapp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"data/presapp270.csv"</span>, show_col_types <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>inflation</span><span class='op'>)</span></span></code></pre>
 </div>
@@ -1565,94 +1565,118 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>presapp</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code># A tibble: 6 × 3
-  X.1               `Dates in office`          Average approval rati…¹
-  &lt;chr&gt;             &lt;chr&gt;                      &lt;chr&gt;                  
-1 &lt;NA&gt;              &lt;NA&gt;                       %                      
-2 Harry Truman      April 1945-January 1953    45.4                   
-3 Dwight Eisenhower January 1953-January 1961  65                     
-4 John Kennedy      January 1961-November 1963 70.1                   
-5 Lyndon Johnson    November 1963-January 1969 55.1                   
-6 Richard Nixon     January 1969-August 1974   49                     
-# ℹ abbreviated name: ¹​`Average approval rating`</code></pre>
+  President  Date `Approval Rating`
+  &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;            
+1 Truman     1945 87%              
+2 Truman     1946 51%              
+3 Truman     1947 63%              
+4 Truman     1948 36%              
+5 Truman     1949 57%              
+6 Truman     1950 37%              </code></pre>
 </div>
-<h2 id="project-thoughts">Project thoughts</h2>
-<p>I am interested in exploring data related to economics and political science. For example, I would be curious to research whether higher inflation is correlated with lower presidential approval ratings.</p>
-<h2 id="research-hypothesis">Research Hypothesis</h2>
-<p>My research question is as follows: does higher inflation have an impact on presidential approval ratings?
-My hypothesis that higher inflation is associated with lower presidential approval ratings. I believe that this is the case because the public generally pays attention to inflation as a general indicator of economic health, and also attributes economic outcomes to the sitting president. By extension, they should disapprove more of a president who is in office while inflation is higher. My explanatory variable of interest is yearly inflation from 1960 - 2024, sourced from the Federal Reserve Bank of St. Louis “Inflation, consumer prices for the United States” indicator. This variable is measured annually and expressed as a percentage. My outcome variable of interest is average presidential approval rating from time in office from Gallup, ranging from Harry Truman to Joe Biden and also expressed as a percentage. If a given increase in inflation corresponds to a lower presidential approval rating, this would provide support for my hypothesis. A given increase in inflation has no positive or negative correlation on presidential approval ratings, or a given increase in inflation is associated with higher presidential ratings, would disprove my hypothesis.</p>
-<h2 id="data-cleaning-and-visualization">Data cleaning and visualization</h2>
+<h2 id="introduction">Introduction</h2>
+<p><strong>My research question is as follows</strong>: does higher inflation have an impact on presidential approval ratings? <strong>I hypothesize that higher inflation is associated with lower presidential approval ratings.</strong> I believe this relationship will be evident, because the public generally pays attention to inflation as a general indicator of economic health, and also attributes economic outcomes to the sitting president. By extension, they should disapprove more of a president who is in office while inflation is higher.</p>
+<p><strong>This research question is important</strong>, because it seeks to provide explanation for presidential approval ratings, the primary indicator used to define the public’s assessment of the president. Presidential approval ratings have a wide berth of consequences. They indicate the president’s likelihood of reelection, the likelihood that president’s party will find success at midterm elections, the level of difficulty the president will incur in trying to pass legislation, and other considerations. As a result, it’s important to understand what variables impact presidential approval ratings. The rate of inflation is one of the most visible aspects of the economy in the public’s eyes, and the public also looks to the president to generate economic success. Thus, it is logical to research whether the rate of inflation informs the public’s opinion of the president.</p>
+<h2 id="data">Data</h2>
+<p>My explanatory variable of interest, or <strong>predictor variable, is</strong> yearly inflation from 1960 - 2024, sourced from the Federal Reserve Bank of St. Louis’s “Inflation, consumer prices for the United States” indicator. This variable is measured annually and expressed as a percentage. <strong>My outcome variable of interest is</strong> Gallup’s yearly presidential approval ratings from time in office, ranging from Harry Truman to Joe Biden, and also expressed as a percentage. I specifically recorded yearly presidential approval ratings from Gallup’s “Presidential Job Approval Center” into an Excel document. If a given increase in inflation corresponds to a lower presidential approval rating, <strong>this would provide support for my hypothesis.</strong> If a given increase in inflation has no correlation with presidential approval ratings, or if a given increase in inflation is associated with higher presidential ratings, <strong>this would mean that I reject my hypothesis.</strong></p>
+<h2 id="data-cleaning">Data Cleaning</h2>
+<h3 id="preview-of-inflation-and-presidential-approval-ratings-datasets">Preview of Inflation and Presidential Approval Ratings Datasets</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>presapp</span> <span class='op'>&lt;-</span> <span class='va'>presapp</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>president <span class='op'>=</span> <span class='va'>X.1</span>, </span>
-<span>         approval <span class='op'>=</span> <span class='va'>`Average approval rating`</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>approval <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>approval</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>year <span class='op'>=</span> <span class='va'>Date</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span></span>
+<span>    approval <span class='op'>=</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/parse_number.html'>parse_number</a></span><span class='op'>(</span><span class='va'>`Approval Rating`</span><span class='op'>)</span><span class='op'>)</span></span>
 <span></span>
-<span><span class='va'>inflation</span> <span class='op'>&lt;-</span> <span class='va'>inflation</span> <span class='op'>|&gt;</span></span>
+<span><span class='va'>presapp</span></span></code></pre>
+</div>
+<pre><code># A tibble: 81 × 4
+   President   year `Approval Rating` approval
+   &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;                &lt;dbl&gt;
+ 1 Truman      1945 87%                     87
+ 2 Truman      1946 51%                     51
+ 3 Truman      1947 63%                     63
+ 4 Truman      1948 36%                     36
+ 5 Truman      1949 57%                     57
+ 6 Truman      1950 37%                     37
+ 7 Truman      1951 28%                     28
+ 8 Truman      1952 28%                     28
+ 9 Eisenhower  1953 74%                     74
+10 Eisenhower  1954 66%                     66
+# ℹ 71 more rows</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>inflation</span> <span class='op'>&lt;-</span> <span class='va'>inflation</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>inflation <span class='op'>=</span> <span class='va'>FPCPITOTLZGUSA</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>year <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='va'>observation_date</span>, <span class='st'>"%Y"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>year <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='va'>observation_date</span>, <span class='st'>"%Y"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>inflation</span></span></code></pre>
 </div>
+<pre><code># A tibble: 65 × 3
+   observation_date inflation  year
+   &lt;date&gt;               &lt;dbl&gt; &lt;int&gt;
+ 1 1960-01-01            1.46  1960
+ 2 1961-01-01            1.07  1961
+ 3 1962-01-01            1.20  1962
+ 4 1963-01-01            1.24  1963
+ 5 1964-01-01            1.28  1964
+ 6 1965-01-01            1.59  1965
+ 7 1966-01-01            3.02  1966
+ 8 1967-01-01            2.77  1967
+ 9 1968-01-01            4.27  1968
+10 1969-01-01            5.46  1969
+# ℹ 55 more rows</code></pre>
 </div>
+<h3 id="plot-visualizing-presidential-voting-records"><strong>Plot Visualizing Presidential Voting Records</strong></h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>presapp</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>presappplot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>presapp</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>year</span>, y <span class='op'>=</span> <span class='va'>approval</span>, color <span class='op'>=</span> <span class='va'>President</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span>, color <span class='op'>=</span> <span class='st'>"indianred1"</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Year"</span>,</span>
+<span>       y <span class='op'>=</span> <span class='st'>"Presidential Approval Rating (%)"</span>,</span>
+<span>       title <span class='op'>=</span> <span class='st'>"Presidential Approval Ratings by Year"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>presappplot</span></span></code></pre>
 </div>
-<pre><code># A tibble: 14 × 3
-   president         `Dates in office`          approval
-   &lt;chr&gt;             &lt;chr&gt;                         &lt;dbl&gt;
- 1 Harry Truman      April 1945-January 1953        45.4
- 2 Dwight Eisenhower January 1953-January 1961      65  
- 3 John Kennedy      January 1961-November 1963     70.1
- 4 Lyndon Johnson    November 1963-January 1969     55.1
- 5 Richard Nixon     January 1969-August 1974       49  
- 6 Gerald Ford       August 1974-January 1977       47.2
- 7 Jimmy Carter      January 1977-January 1981      45.5
- 8 Ronald Reagan     January 1981-January 1989      52.8
- 9 George H.W. Bush  January 1989-January 1993      60.9
-10 Bill Clinton      January 1993-January 2001      55.1
-11 George W. Bush    January 2001-January 2009      49.4
-12 Barack Obama      January 2009-January 2017      47.9
-13 Donald Trump      January 2017-January 2021      41.1
-14 Joe Biden         January 2021-January 2025      42.2</code></pre>
+<p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" alt="" width="624" /></p>
 </div>
+<h3 id="joining-datasets">Joining Datasets</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
 <span></span>
-<span><span class='va'>inflation_by_pres</span> <span class='op'>&lt;-</span> <span class='va'>inflation</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>president <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case-and-replace-when.html'>case_when</a></span><span class='op'>(</span></span>
-<span>    <span class='va'>year</span> <span class='op'>&gt;=</span> <span class='fl'>1945</span> <span class='op'>&amp;</span> <span class='va'>year</span> <span class='op'>&lt;=</span> <span class='fl'>1952</span> <span class='op'>~</span> <span class='st'>"Harry Truman"</span>,</span>
-<span>    <span class='va'>year</span> <span class='op'>&gt;=</span> <span class='fl'>1953</span> <span class='op'>&amp;</span> <span class='va'>year</span> <span class='op'>&lt;=</span> <span class='fl'>1960</span> <span class='op'>~</span> <span class='st'>"Dwight Eisenhower"</span>,</span>
-<span>    <span class='va'>year</span> <span class='op'>&gt;=</span> <span class='fl'>1961</span> <span class='op'>&amp;</span> <span class='va'>year</span> <span class='op'>&lt;=</span> <span class='fl'>1963</span> <span class='op'>~</span> <span class='st'>"John Kennedy"</span>,</span>
-<span>    <span class='va'>year</span> <span class='op'>&gt;=</span> <span class='fl'>1964</span> <span class='op'>&amp;</span> <span class='va'>year</span> <span class='op'>&lt;=</span> <span class='fl'>1968</span> <span class='op'>~</span> <span class='st'>"Lyndon Johnson"</span>,</span>
-<span>    <span class='va'>year</span> <span class='op'>&gt;=</span> <span class='fl'>1969</span> <span class='op'>&amp;</span> <span class='va'>year</span> <span class='op'>&lt;=</span> <span class='fl'>1973</span> <span class='op'>~</span> <span class='st'>"Richard Nixon"</span>,</span>
-<span>    <span class='va'>year</span> <span class='op'>&gt;=</span> <span class='fl'>1974</span> <span class='op'>&amp;</span> <span class='va'>year</span> <span class='op'>&lt;=</span> <span class='fl'>1976</span> <span class='op'>~</span> <span class='st'>"Gerald Ford"</span>,</span>
-<span>    <span class='va'>year</span> <span class='op'>&gt;=</span> <span class='fl'>1977</span> <span class='op'>&amp;</span> <span class='va'>year</span> <span class='op'>&lt;=</span> <span class='fl'>1980</span> <span class='op'>~</span> <span class='st'>"Jimmy Carter"</span>,</span>
-<span>    <span class='va'>year</span> <span class='op'>&gt;=</span> <span class='fl'>1981</span> <span class='op'>&amp;</span> <span class='va'>year</span> <span class='op'>&lt;=</span> <span class='fl'>1988</span> <span class='op'>~</span> <span class='st'>"Ronald Reagan"</span>,</span>
-<span>    <span class='va'>year</span> <span class='op'>&gt;=</span> <span class='fl'>1989</span> <span class='op'>&amp;</span> <span class='va'>year</span> <span class='op'>&lt;=</span> <span class='fl'>1992</span> <span class='op'>~</span> <span class='st'>"George H.W. Bush"</span>,</span>
-<span>    <span class='va'>year</span> <span class='op'>&gt;=</span> <span class='fl'>1993</span> <span class='op'>&amp;</span> <span class='va'>year</span> <span class='op'>&lt;=</span> <span class='fl'>2000</span> <span class='op'>~</span> <span class='st'>"Bill Clinton"</span>,</span>
-<span>    <span class='va'>year</span> <span class='op'>&gt;=</span> <span class='fl'>2001</span> <span class='op'>&amp;</span> <span class='va'>year</span> <span class='op'>&lt;=</span> <span class='fl'>2008</span> <span class='op'>~</span> <span class='st'>"George W. Bush"</span>,</span>
-<span>    <span class='va'>year</span> <span class='op'>&gt;=</span> <span class='fl'>2009</span> <span class='op'>&amp;</span> <span class='va'>year</span> <span class='op'>&lt;=</span> <span class='fl'>2016</span> <span class='op'>~</span> <span class='st'>"Barack Obama"</span>,</span>
-<span>    <span class='va'>year</span> <span class='op'>&gt;=</span> <span class='fl'>2017</span> <span class='op'>&amp;</span> <span class='va'>year</span> <span class='op'>&lt;=</span> <span class='fl'>2021</span> <span class='op'>~</span> <span class='st'>"Donald Trump"</span>,</span>
-<span>    <span class='va'>year</span> <span class='op'>&gt;=</span> <span class='fl'>2022</span> <span class='op'>&amp;</span> <span class='va'>year</span> <span class='op'>&lt;=</span> <span class='fl'>2025</span> <span class='op'>~</span> <span class='st'>"Joe Biden"</span> </span>
-<span>    <span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>president</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>avg_inflation <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>inflation</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='va'>joined</span> <span class='op'>&lt;-</span> <span class='va'>presapp</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>inner_join</a></span><span class='op'>(</span><span class='va'>inflation</span>, by <span class='op'>=</span> <span class='st'>"year"</span><span class='op'>)</span> </span>
 <span></span>
-<span><span class='va'>visual_data</span> <span class='op'>&lt;-</span> <span class='va'>presapp</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>inner_join</a></span><span class='op'>(</span><span class='va'>inflation_by_pres</span>, by <span class='op'>=</span> <span class='st'>"president"</span><span class='op'>)</span></span></code></pre>
+<span><span class='va'>joined</span></span></code></pre>
 </div>
+<pre><code># A tibble: 65 × 6
+   President   year `Approval Rating` approval observation_date
+   &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;                &lt;dbl&gt; &lt;date&gt;          
+ 1 Eisenhower  1960 65%                     65 1960-01-01      
+ 2 Kennedy     1961 73%                     73 1961-01-01      
+ 3 Kennedy     1962 79%                     79 1962-01-01      
+ 4 Kennedy     1963 67%                     67 1963-01-01      
+ 5 Johnson     1964 75%                     75 1964-01-01      
+ 6 Johnson     1965 69%                     69 1965-01-01      
+ 7 Johnson     1966 57%                     57 1966-01-01      
+ 8 Johnson     1967 46%                     46 1967-01-01      
+ 9 Johnson     1968 36%                     36 1968-01-01      
+10 Nixon       1969 63%                     63 1969-01-01      
+# ℹ 55 more rows
+# ℹ 1 more variable: inflation &lt;dbl&gt;</code></pre>
 </div>
+<h2 id="results">Results</h2>
+<h3 id="plot-visualizing-presidential-approval-ratings-with-relation-to-changes-in-inflation"><strong>Plot Visualizing Presidential Approval Ratings with Relation to Changes in Inflation</strong></h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>visual</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>visual_data</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>avg_inflation</span>, y <span class='op'>=</span> <span class='va'>approval</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>visual</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>joined</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>inflation</span>, y <span class='op'>=</span> <span class='va'>approval</span>, color <span class='op'>=</span> <span class='va'>President</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span>, color <span class='op'>=</span> <span class='st'>"indianred1"</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='va'>president</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>2</span>, vjust <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.5</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Average Inflation During Term (%)"</span>,</span>
-<span>       y <span class='op'>=</span> <span class='st'>"Average Presidential Approval Rating (%)"</span>,</span>
-<span>       title <span class='op'>=</span> <span class='st'>"Relationship Between Inflation and Presidential Approval"</span><span class='op'>)</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Yearly Inflation (%)"</span>,</span>
+<span>       y <span class='op'>=</span> <span class='st'>"Yearly Presidential Approval Rating (%)"</span>,</span>
+<span>       title <span class='op'>=</span> <span class='st'>"Relationship Between Inflation and Presidential Approval Ratings"</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='va'>visual</span></span></code></pre>
 </div>
@@ -1662,7 +1686,7 @@ My hypothesis that higher inflation is associated with lower presidential approv
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://broom.tidymodels.org/'>broom</a></span><span class='op'>)</span></span>
-<span><span class='va'>approval_fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>approval</span> <span class='op'>~</span> <span class='va'>avg_inflation</span>, data <span class='op'>=</span> <span class='va'>visual_data</span><span class='op'>)</span></span>
+<span><span class='va'>approval_fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>approval</span> <span class='op'>~</span> <span class='va'>inflation</span>, data <span class='op'>=</span> <span class='va'>joined</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='va'>regression_table</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>approval_fit</span><span class='op'>)</span></span>
 <span></span>
@@ -1687,23 +1711,23 @@ My hypothesis that higher inflation is associated with lower presidential approv
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">58.49</td>
-<td style="text-align: right;">4.10</td>
-<td style="text-align: right;">14.26</td>
+<td style="text-align: right;">57.43</td>
+<td style="text-align: right;">2.59</td>
+<td style="text-align: right;">22.15</td>
 <td style="text-align: right;">0.00</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">avg_inflation</td>
-<td style="text-align: right;">-1.52</td>
-<td style="text-align: right;">0.86</td>
-<td style="text-align: right;">-1.76</td>
-<td style="text-align: right;">0.11</td>
+<td style="text-align: left;">inflation</td>
+<td style="text-align: right;">-1.27</td>
+<td style="text-align: right;">0.56</td>
+<td style="text-align: right;">-2.28</td>
+<td style="text-align: right;">0.03</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>According to my regression analysis, the predicted presidential approval rating when average inflation is 0% is 58.49%. The slope is -1.52, meaning that every 1% increase in average inflation corresponds to a drop in presidential approval ratings of 1.52%. These findings support my hypothesis that higher average inflation is associated with lower presidential approval ratings. One thing to note is the p-value of 11%, which informs us that there is an 11% chance these findings would be visible even if inflation had no effect on presidential approval ratings.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>According to my regression analysis, the predicted presidential approval rating when yearly inflation is 0% is 57.43%. The slope is -1.27, meaning that every 1% increase in yearly inflation corresponds to a drop in presidential approval ratings of 1.27%. These findings support my hypothesis that higher inflation is associated with lower presidential approval ratings. One thing to note is the p-value of 3%, which informs us that there is an 3% chance these findings would be visible even if inflation had no effect on presidential approval ratings.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
