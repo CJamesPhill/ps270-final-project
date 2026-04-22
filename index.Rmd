@@ -49,10 +49,11 @@ inflation
 ### **Plot Visualizing Presidential Voting Records**
 
 ```{r}
-presappplot <- ggplot(data = presapp, mapping = aes(x = approval, y = year)) +
+presappplot <- ggplot(data = presapp, mapping = aes(x = year, y = approval, color = President)) +
   geom_point() +
-  labs(x = "Presidential Approval Rating (%)",
-       y = "Year",
+  geom_smooth(method = "lm", se = FALSE, color = "indianred1") +
+  labs(x = "Year",
+       y = "Presidential Approval Rating (%)",
        title = "Presidential Approval Ratings by Year")
 
 presappplot
