@@ -86,7 +86,7 @@ visual <- ggplot(data = joined, mapping = aes(x = inflation, y = approval, color
 visual
 ```
 
-## Regression
+### **Regression Output**
 ```{r}
 library(broom)
 approval_fit <- lm(approval ~ inflation, data = joined)
@@ -100,10 +100,14 @@ regression_table |>
     caption = "Table 1: Linear Regression of Presidential Approval on Inflation"
   )
 ```
-According to my regression analysis, the predicted presidential approval rating when yearly inflation is 0% is 57.43%. The slope is -1.27, meaning that every 1% increase in yearly inflation corresponds to a drop in presidential approval ratings of 1.27%. These findings support my hypothesis that higher inflation is associated with lower presidential approval ratings. Referring back to the null and alternative hypotheses, a p-value of 0.03 means that I can adopt the alternative hypothesis. The regression coefficient is negative, and the p-value is less than 0.05. Since this analysis is run at the 95% confidence interval, a p-value lower than 0.05 would indicate statistically significant results. Furthermore, the p-value of 3% also tells us that if the null hypothesis were to be true, and if inflation were to have no effect on presidential approval ratings, there would only be a 3% chance of observing a relationship between inflation and presidential ratings this strong or stronger due to simply random chance. 
+According to my regression analysis, the predicted presidential approval rating when yearly inflation is 0% is 57.43%. **The estimated slope is -1.27, meaning that** every 1% increase in yearly inflation corresponds to a drop in presidential approval ratings of 1.27%. These findings support my hypothesis that higher inflation is associated with lower presidential approval ratings. Since this analysis is run at the 95% confidence interval, **a p-value lower than 0.05 (0.03) indicates statistically significant results.** Furthermore, the p-value of 3% also tells us that if the null hypothesis were to be true, and if inflation were to have no effect on presidential approval ratings, there would only be a 3% chance of observing a relationship between inflation and presidential ratings this strong or stronger due to simply random chance. In sum, the regression coefficient is negative (-1.27), and the p-value is less than 0.05 (0.03), so I can reject the null hypothesis and accept my alternative hypothesis, which suggests that higher inflation is associated with lower presidential approval ratings.
 
+**Substantively, my results suggest that** every 1% increase in yearly inflation is associated with a 1.27% decrease in presidential approval ratings. However, I should be weary to interpret my results causally. This study is not a randomized experiment, and instead relies off of observational data, since it borrows naturally occurring inflation and presidential approval ratings. It is often difficult to observe the counterfactual when utilizing observational data. For example, it is impossible for me to know how presidential approval ratings would have behaved without the effects of inflation. There are many other variables that may impact both inflation and presidential approval ratings, and it is very difficult to isolate the effects of the predictor variable on the outcome variable without randomization. As a result, my study **suffers from internal validity as observational studies often do, and cannot be interpret causally.**
 
+## Conclusion
 
-Can we interpret the results with causaility 
+**In summary,** my results show that higher inflation is associated with lower presidential approval ratings. **There is strong support for this hypothesis** (my alternative hypothesis) given that my  regression coefficient is negative (-1.27) and that my p-value less than 0.05 (0.03).  
+ 
+The **main limitation of this analysis is the fact that it uses observational data.** Not incorporating randomization into the study stunts the internal validity, and as a result we can not presume causality. **Additionally, there could be confounding variables** which could impact both inflation and presidential approval ratings, for example military conflict like the Vietnam War. The Vietnam War significantly increased inflation and decreased presidential approval ratings. These kinds of confounding variables could produce an artificially strong association between high inflation and low presidential approval ratings. 
 
-other terms
+**A way to combat the internal validity issues brought on by observational data** would be to instead utilize a multiple regression method. Multiple regression models are often better predictors, because they incorporate multiple predictor variables, like military conflicts and other confounders in addition to inflation. This allows the researcher to interpret ceteris paribus relationships, where other explanatory variables are held constant, and the effects of the explanatory variable of interest on the outcome variable can be viewed in isolation. 
