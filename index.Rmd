@@ -1,18 +1,15 @@
 ---
 title: "How Inflation Impacts Presidential Approval Ratings"
 author: "Carson Phillips"
-description: "The relationship between yearly inflation and presidential approval rates."
+description: "The relationship between yearly inflation and presidential approval ratings."
 output:
   distill::distill_article:
     self_contained: false
 ---
-```{r, include = FALSE}
+```{r, echo = FALSE}
 library(tidyverse)
 inflation <- read_csv("data/inflation.csv", show_col_types = FALSE)
 presapp <- read_csv("data/presapp270.csv", show_col_types = FALSE)
-
-head(inflation)
-head(presapp)
 ```
 
 
@@ -29,13 +26,14 @@ My explanatory variable of interest, or **predictor variable, is** yearly inflat
 
 ### Preview of Inflation and Presidential Approval Ratings Datasets
 
-```{r, include = FALSE}
+```{r, echo = FALSE}
 presapp <- presapp |>
   rename(year = Date) |>
   mutate(
     approval = parse_number(`Approval Rating`))
 
 presapp |>
+head(10) |>
 knitr::kable(
     digits = 2,
     col.names = c("President", "Year", "Approval Rating (%)", "Approval Rating"),
@@ -47,6 +45,7 @@ inflation <- inflation |>
   mutate(year = as.integer(format(observation_date, "%Y")))
 
 inflation |>
+  head(10) |>
   knitr::kable(
     digits = 2,
     col.names = c("Observation Date", "Inflation", "Year"),
@@ -54,9 +53,9 @@ inflation |>
   )
 ```
 
-### **Plot Visualizing Presidential Voting Records**
+### **Visualizing Presidential Voting Records**
 
-```{r, include = FALSE}
+```{r, echo = FALSE}
 presappplot <- ggplot(data = presapp, mapping = aes(x = year, y = approval, color = President)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, color = "indianred1") +
@@ -67,22 +66,20 @@ presappplot <- ggplot(data = presapp, mapping = aes(x = year, y = approval, colo
 presappplot
 ```
 
-### Joining Datasets
 
-```{r, include = FALSE}
+
+```{r, echo = FALSE}
 library(tidyverse)
 
 joined <- presapp |>
   inner_join(inflation, by = "year") 
-
-joined
 ```
 
 ## Results
 
-### **Visualizing Relationship Between Inflation and Presidential Approval Ratings**
+### **Relationship Between Inflation and Presidential Approval Ratings**
 
-```{r, include = FALSE}
+```{r, echo = FALSE}
 visual <- ggplot(data = joined, mapping = aes(x = inflation, y = approval, color = President)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, color = "indianred1") +
@@ -95,7 +92,7 @@ visual
 ```
 
 ### **Regression Output**
-```{r, include = FALSE}
+```{r, echo = FALSE}
 library(broom)
 approval_fit <- lm(approval ~ inflation, data = joined)
 
@@ -114,9 +111,9 @@ According to my regression analysis, the predicted presidential approval rating 
 
 ## Conclusion
 
-**In summary,** my results show that higher inflation is associated with lower presidential approval ratings. **There is strong support for this hypothesis** (my alternative hypothesis) given that my  regression coefficient is negative (-1.27), that my p-value less than 0.05 (0.03), and that my standard error is relatively small (0.56).  
+**In summary,** my results show that higher inflation is associated with lower presidential approval ratings. **There is strong support for this hypothesis** (my alternative hypothesis) given that my  regression coefficient is negative (-1.27), that my p-value less than 0.05 (0.03), and that my standard error is relatively small (0.56). Though, the observational nature of the study means that we should not interpret these results causally.
  
-The **main limitation of this analysis is the fact that it uses observational data.** Not incorporating randomization into the study stunts the internal validity, and as a result we can not presume causality. **Additionally, there could be confounding variables** which could impact both inflation and presidential approval ratings, for example a military conflict like the Vietnam War. The Vietnam War significantly increased inflation and decreased presidential approval ratings. These kinds of confounding variables which impact both inflation rates and presidential approval rates could produce an artificially strong association between high inflation and low presidential approval ratings. Because my presidential approval ratings data comes from Gallup polls, it could suffer from nonresponse bias. For example, if individuals who feel strongly about the economy are more likely to respond to these polls, my presidential approval ratings data would be skewed. Furthermore, the fact that I am using averages to measure inflation, and drawing on presidential approval ratings at a specific point in time within a given year to measure presidential approval ratings, means that I may be glossing over some nuance. More precise measurements, for example daily values for each data set would be more effective, but are not feasible. 
+The **main limitation of this analysis is the fact that it uses observational data.** Not incorporating randomization into the study stunts the internal validity, and as a result we can not presume causality. **Additionally, there could be confounding variables** which could impact both inflation and presidential approval ratings, for example a military conflict like the Vietnam War. The Vietnam War significantly increased inflation and decreased presidential approval ratings. These kinds of confounding variables which impact both inflation rates and presidential approval rates could produce an artificially strong association between high inflation and low presidential approval ratings. Because my presidential approval ratings data comes from Gallup polls, it could suffer from nonresponse bias. For example, if individuals who feel strongly about the economy are more likely to respond to these polls, my presidential approval ratings data would be skewed. Furthermore, the fact that I am using averages to measure inflation, and drawing on presidential approval ratings at a specific point in time within a given year to measure presidential approval ratings, means that I may be glossing over some nuance. More precise measurements, for example daily values for each data set would be more effective, but are not feasible. Essentially, given more resources, the ability to control for the large sum of confounders, and access more precise measurements of the data would be useful. 
 
 **A way to combat the internal validity issues brought on by observational data** would be to instead utilize a multiple regression method. Multiple regression models are often better predictors, because they incorporate multiple predictor variables, like military conflicts and other confounders in addition to inflation. This allows the researcher to interpret ceteris paribus relationships, where other explanatory variables are held constant, and the effects of the explanatory variable of interest on the outcome variable can be viewed in isolation. 
 
