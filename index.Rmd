@@ -1,12 +1,12 @@
 ---
-title: "The Relationship Between Inflation and Presidential Approval Ratings"
+title: "How Inflation Impacts Presidential Approval Ratings"
 author: "Carson Phillips"
 description: "My final project"
 output:
   distill::distill_article:
     self_contained: false
 ---
-```{r}
+```{r, include = false}
 library(tidyverse)
 inflation <- read_csv("data/inflation.csv", show_col_types = FALSE)
 presapp <- read_csv("data/presapp270.csv", show_col_types = FALSE)
@@ -25,11 +25,11 @@ head(presapp)
 
 ## Data
 
-My explanatory variable of interest, or **predictor variable, is** yearly inflation from 1960 - 2024, sourced from the Federal Reserve Bank of St. Louis's "Inflation, consumer prices for the United States" indicator. This variable is measured annually and expressed as a percentage. **My outcome variable of interest is** Gallup's yearly presidential approval ratings from time in office, ranging from Harry Truman to Joe Biden, and also expressed as a percentage. I specifically recorded yearly presidential approval ratings from Gallup's "Presidential Job Approval Center" into an Excel document. If the results are statistically significant, and a given increase in inflation corresponds to a lower presidential approval rating, **this would provide support for my alternative hypothesis.** If a given increase in inflation has no correlation with presidential approval ratings, or if a given increase in inflation is associated with higher presidential ratings, **this would mean that I reject my hypothesis.** The **decision rule** would indicate that I should reject the **null hypothesis** if the regression coefficient for inflation is negative, and the p-value is less than 0.05 (since I will run this regression at the 95% Confidence Interval). According to the **rejection criteria**, I should will fail to reject the null hypothesis if the p-value is greater than 0.05, or if the regression coefficient for inflation is positive. 
+My explanatory variable of interest, or **predictor variable, is** yearly inflation from 1960 - 2024, sourced from the Federal Reserve Bank of St. Louis's "Inflation, consumer prices for the United States" indicator. This variable is measured annually and expressed as a percentage. **My outcome variable of interest is** Gallup's yearly presidential approval ratings from time in office, ranging from Harry Truman to Joe Biden, and also expressed as a percentage. I specifically recorded yearly presidential approval ratings from Gallup's "Presidential Job Approval Center" into an Excel document, using polls conducted between March and April of the given year. If the results are statistically significant, and a given increase in inflation corresponds to a lower presidential approval rating, **this would provide support for my alternative hypothesis.** If a given increase in inflation has no correlation with presidential approval ratings, or if a given increase in inflation is associated with higher presidential ratings, **this would mean that I reject my hypothesis.** The **decision rule** would indicate that I should reject the **null hypothesis** if the regression coefficient for inflation is negative, and the p-value is less than 0.05 (since I will run this regression at the 95% Confidence Interval). According to the **rejection criteria**, I should will fail to reject the null hypothesis if the p-value is greater than 0.05, or if the regression coefficient for inflation is positive. 
 
 ### Preview of Inflation and Presidential Approval Ratings Datasets
 
-```{r}
+```{r, include = false}
 presapp <- presapp |>
   rename(year = Date) |>
   mutate(
@@ -46,7 +46,7 @@ inflation
 
 ### **Plot Visualizing Presidential Voting Records**
 
-```{r}
+```{r, include = false}
 presappplot <- ggplot(data = presapp, mapping = aes(x = year, y = approval, color = President)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, color = "indianred1") +
@@ -59,7 +59,7 @@ presappplot
 
 ### Joining Datasets
 
-```{r}
+```{r, include = false}
 library(tidyverse)
 
 joined <- presapp |>
@@ -70,9 +70,9 @@ joined
 
 ## Results
 
-### **Plot Visualizing Presidential Approval Ratings with Relation to Changes in Inflation**
+### **Visualizing Presidential Approval Ratings with Relation to Changes in Inflation**
 
-```{r}
+```{r, include = false}
 visual <- ggplot(data = joined, mapping = aes(x = inflation, y = approval, color = President)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, color = "indianred1") +
@@ -85,7 +85,7 @@ visual
 ```
 
 ### **Regression Output**
-```{r}
+```{r, include = false}
 library(broom)
 approval_fit <- lm(approval ~ inflation, data = joined)
 
@@ -98,14 +98,18 @@ regression_table |>
     caption = "Table 1: Linear Regression of Presidential Approval on Inflation"
   )
 ```
-According to my regression analysis, the predicted presidential approval rating when yearly inflation is 0% is 57.43%. **The estimated slope is -1.27, meaning that** every 1% increase in yearly inflation corresponds to a drop in presidential approval ratings of 1.27%. These findings support my hypothesis that higher inflation is associated with lower presidential approval ratings. Since this analysis is run at the 95% confidence interval, **a p-value lower than 0.05 (0.03) indicates statistically significant results.** Furthermore, the p-value of 3% also tells us that if the null hypothesis were to be true, and if inflation were to have no effect on presidential approval ratings, there would only be a 3% chance of observing a relationship between inflation and presidential ratings this strong or stronger due to simply random chance. In sum, the regression coefficient is negative (-1.27), and the p-value is less than 0.05 (0.03), so I can reject the null hypothesis and accept my alternative hypothesis, which suggests that higher inflation is associated with lower presidential approval ratings.
+According to my regression analysis, the predicted presidential approval rating when yearly inflation is 0% is 57.43%. **The estimated slope is -1.27, meaning that** every 1% increase in yearly inflation corresponds to a drop in presidential approval ratings of 1.27%. These findings support my hypothesis that higher inflation is associated with lower presidential approval ratings. Since this analysis is run at the 95% confidence interval, **a p-value lower than 0.05 (0.03) indicates statistically significant results.** Furthermore, the p-value of 3% also tells us that if the null hypothesis were to be true, and if inflation were to have no effect on presidential approval ratings, there would only be a 3% chance of observing a relationship between inflation and presidential ratings this strong or stronger due to simply random chance. The standard error value, or the standard deviation of the sample statistic across repeated samples, of my coefficient of interest is 0.56. This value is relatively small, and suggests that my findings are precise. In sum, the regression coefficient is negative (-1.27), and the p-value is less than 0.05 (0.03), so I can reject the null hypothesis and accept my alternative hypothesis, which suggests that higher inflation is associated with lower presidential approval ratings.
 
-**Substantively, my results suggest that** every 1% increase in yearly inflation is associated with a 1.27% decrease in presidential approval ratings. However, I should be weary to interpret my results causally. This study is not a randomized experiment, and instead relies off of observational data, since it borrows naturally occurring inflation and presidential approval ratings. It is often difficult to observe the counterfactual when utilizing observational data. For example, it is impossible for me to know how presidential approval ratings would have behaved without the effects of inflation. There are many other variables that may impact both inflation and presidential approval ratings, and it is very difficult to isolate the effects of the predictor variable on the outcome variable without randomization. As a result, my study **suffers from internal validity as observational studies often do, and cannot be interpret causally.**
+**Substantively, my results suggest that** every 1% increase in yearly inflation is associated with a 1.27% decrease in presidential approval ratings. However, I should be weary to interpret my results causally. This study is not a randomized experiment, and instead relies off of observational data, since it borrows naturally occurring inflation and presidential approval ratings. I am unable to randomly assign inflation levels to different years to ensure balance. It is often difficult to observe the counterfactual when utilizing observational data. For example, it is impossible for me to know how presidential approval ratings would have behaved without the effects of inflation. There are many other variables that may impact both inflation and presidential approval ratings, and it is very difficult to isolate the effects of the predictor variable on the outcome variable without randomization. As a result, my study **suffers from internal validity as observational studies often do, and cannot be interpret causally.**
 
 ## Conclusion
 
-**In summary,** my results show that higher inflation is associated with lower presidential approval ratings. **There is strong support for this hypothesis** (my alternative hypothesis) given that my  regression coefficient is negative (-1.27) and that my p-value less than 0.05 (0.03).  
+**In summary,** my results show that higher inflation is associated with lower presidential approval ratings. **There is strong support for this hypothesis** (my alternative hypothesis) given that my  regression coefficient is negative (-1.27), that my p-value less than 0.05 (0.03), and that my standard error is relatively small (0.56).  
  
-The **main limitation of this analysis is the fact that it uses observational data.** Not incorporating randomization into the study stunts the internal validity, and as a result we can not presume causality. **Additionally, there could be confounding variables** which could impact both inflation and presidential approval ratings, for example military conflict like the Vietnam War. The Vietnam War significantly increased inflation and decreased presidential approval ratings. These kinds of confounding variables could produce an artificially strong association between high inflation and low presidential approval ratings. 
+The **main limitation of this analysis is the fact that it uses observational data.** Not incorporating randomization into the study stunts the internal validity, and as a result we can not presume causality. **Additionally, there could be confounding variables** which could impact both inflation and presidential approval ratings, for example a military conflict like the Vietnam War. The Vietnam War significantly increased inflation and decreased presidential approval ratings. These kinds of confounding variables which impact both inflation rates and presidential approval rates could produce an artificially strong association between high inflation and low presidential approval ratings. Because my presidential approval ratings data comes from Gallup polls, it could suffer from nonresponse bias. For example, if individuals who feel strongly about the economy are more likely to respond to these polls, my presidential approval ratings data would be skewed. Furthermore, the fact that I am using averages to measure inflation, and drawing on presidential approval ratings at a specific point in time within a given year to measure presidential approval ratings, means that I may be glossing over some nuance. More precise measurements, for example daily values for each data set would be more effective, but are not feasible. 
 
 **A way to combat the internal validity issues brought on by observational data** would be to instead utilize a multiple regression method. Multiple regression models are often better predictors, because they incorporate multiple predictor variables, like military conflicts and other confounders in addition to inflation. This allows the researcher to interpret ceteris paribus relationships, where other explanatory variables are held constant, and the effects of the explanatory variable of interest on the outcome variable can be viewed in isolation. 
+
+```{r print-code, ref.label=knitr::all_labels(), echo = TRUE, eval=FALSE}
+
+```
