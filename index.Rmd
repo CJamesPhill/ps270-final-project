@@ -35,13 +35,23 @@ presapp <- presapp |>
   mutate(
     approval = parse_number(`Approval Rating`))
 
-presapp
+presapp |>
+knitr::kable(
+    digits = 2,
+    col.names = c("President", "Year", "Approval Rating (%)", "Approval Rating"),
+    caption = "Presidential Approval Ratings Data Preview"
+  )
 
 inflation <- inflation |>
   rename(inflation = FPCPITOTLZGUSA) |>
   mutate(year = as.integer(format(observation_date, "%Y")))
 
-inflation
+inflation |>
+  knitr::kable(
+    digits = 2,
+    col.names = c("Observation Date", "Inflation", "Year"),
+    caption = "Inflation Data Preview"
+  )
 ```
 
 ### **Plot Visualizing Presidential Voting Records**
@@ -70,7 +80,7 @@ joined
 
 ## Results
 
-### **Visualizing Presidential Approval Ratings with Relation to Changes in Inflation**
+### **Visualizing Relationship Between Inflation and Presidential Approval Ratings**
 
 ```{r, include = false}
 visual <- ggplot(data = joined, mapping = aes(x = inflation, y = approval, color = President)) +
