@@ -1,7 +1,7 @@
 ---
 title: "How Inflation Impacts Presidential Approval Ratings"
 author: "Carson Phillips"
-description: "The relationship between yearly inflation and presidential approval rates.
+description: "The relationship between yearly inflation and presidential approval rates."
 output:
   distill::distill_article:
     self_contained: false
