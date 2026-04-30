@@ -1,5 +1,5 @@
 ---
-title: "PS270 Final Project"
+title: "The Relationship Between Inflation and Presidential Approval Ratings"
 author: "Carson Phillips"
 description: "My final project"
 output:
@@ -26,8 +26,6 @@ head(presapp)
 ## Data
 
 My explanatory variable of interest, or **predictor variable, is** yearly inflation from 1960 - 2024, sourced from the Federal Reserve Bank of St. Louis's "Inflation, consumer prices for the United States" indicator. This variable is measured annually and expressed as a percentage. **My outcome variable of interest is** Gallup's yearly presidential approval ratings from time in office, ranging from Harry Truman to Joe Biden, and also expressed as a percentage. I specifically recorded yearly presidential approval ratings from Gallup's "Presidential Job Approval Center" into an Excel document. If the results are statistically significant, and a given increase in inflation corresponds to a lower presidential approval rating, **this would provide support for my alternative hypothesis.** If a given increase in inflation has no correlation with presidential approval ratings, or if a given increase in inflation is associated with higher presidential ratings, **this would mean that I reject my hypothesis.** The **decision rule** would indicate that I should reject the **null hypothesis** if the regression coefficient for inflation is negative, and the p-value is less than 0.05 (since I will run this regression at the 95% Confidence Interval). According to the **rejection criteria**, I should will fail to reject the null hypothesis if the p-value is greater than 0.05, or if the regression coefficient for inflation is positive. 
-
-## Data Cleaning
 
 ### Preview of Inflation and Presidential Approval Ratings Datasets
 
