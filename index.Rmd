@@ -6,7 +6,7 @@ output:
   distill::distill_article:
     self_contained: false
 ---
-```{r, include = false}
+```{r, include = FALSE}
 library(tidyverse)
 inflation <- read_csv("data/inflation.csv", show_col_types = FALSE)
 presapp <- read_csv("data/presapp270.csv", show_col_types = FALSE)
@@ -29,7 +29,7 @@ My explanatory variable of interest, or **predictor variable, is** yearly inflat
 
 ### Preview of Inflation and Presidential Approval Ratings Datasets
 
-```{r, include = false}
+```{r, include = FALSE}
 presapp <- presapp |>
   rename(year = Date) |>
   mutate(
@@ -56,7 +56,7 @@ inflation |>
 
 ### **Plot Visualizing Presidential Voting Records**
 
-```{r, include = false}
+```{r, include = FALSE}
 presappplot <- ggplot(data = presapp, mapping = aes(x = year, y = approval, color = President)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, color = "indianred1") +
@@ -69,7 +69,7 @@ presappplot
 
 ### Joining Datasets
 
-```{r, include = false}
+```{r, include = FALSE}
 library(tidyverse)
 
 joined <- presapp |>
@@ -82,7 +82,7 @@ joined
 
 ### **Visualizing Relationship Between Inflation and Presidential Approval Ratings**
 
-```{r, include = false}
+```{r, include = FALSE}
 visual <- ggplot(data = joined, mapping = aes(x = inflation, y = approval, color = President)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, color = "indianred1") +
@@ -95,7 +95,7 @@ visual
 ```
 
 ### **Regression Output**
-```{r, include = false}
+```{r, include = FALSE}
 library(broom)
 approval_fit <- lm(approval ~ inflation, data = joined)
 
